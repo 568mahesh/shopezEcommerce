@@ -1,0 +1,151 @@
+<div class="page-center auth-page-bg">
+  <div class="auth-card auth-card-wide">
+
+    <div class="auth-top-links">
+      <a routerLink="/" class="text-link">← Back to Home</a>
+    </div>
+
+    <h2>Create Account</h2>
+    <p class="auth-subtitle">Register as admin or user to continue with ShopEZ</p>
+
+    <!-- ✅ FORM START -->
+    <form (ngSubmit)="register()" #registerForm="ngForm" autocomplete="on">
+
+      <!-- FULL NAME -->
+      <div class="form-group">
+        <label class="form-label">Full Name</label>
+        <input
+          type="text"
+          name="fullname"
+          class="form-control"
+          [(ngModel)]="form.fullname"
+          placeholder="Enter full name"
+          required
+        />
+        <div class="error-text" *ngIf="submitted && !form.fullname">
+          Full name is required
+        </div>
+      </div>
+
+      <!-- USERNAME + ROLE -->
+      <div class="form-row-two">
+        <div class="form-group">
+          <label class="form-label">Username</label>
+          <input
+            type="text"
+            name="username"
+            class="form-control"
+            [(ngModel)]="form.username"
+            placeholder="Enter username"
+            autocomplete="username"
+            required
+          />
+          <div class="error-text" *ngIf="submitted && !form.username">
+            Username is required
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Role</label>
+          <select
+            name="role"
+            class="form-control"
+            [(ngModel)]="form.role"
+          >
+            <option value="USER">User</option>
+           <!--<option value="ADMIN">Admin</option>--> 
+          </select>
+        </div>
+      </div>
+
+      <!-- EMAIL + PHONE -->
+      <div class="form-row-two">
+
+        <!-- EMAIL -->
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <input
+            type="email"
+            name="email"
+            class="form-control"
+            [(ngModel)]="form.email"
+            placeholder="Enter email"
+            autocomplete="email"
+            required
+          />
+          <div class="error-text" *ngIf="submitted && !form.email">
+            Email is required
+          </div>
+          <div class="error-text"
+               *ngIf="submitted && form.email && !isValidEmail(form.email)">
+            Enter a valid email address
+          </div>
+        </div>
+
+        <!-- PHONE -->
+        <div class="form-group">
+          <label class="form-label">Phone Number</label>
+
+          <input
+            type="text"
+            name="phone"
+            class="form-control"
+            [(ngModel)]="form.phone"
+            placeholder="Enter phone number"
+            maxlength="10"
+            pattern="^[6-9][0-9]{9}$"
+            required
+            inputmode="numeric"
+            autocomplete="tel"
+            (keypress)="allowOnlyNumbers($event)"
+            (paste)="onPaste($event)"
+          />
+
+          <div class="error-text" *ngIf="submitted && !form.phone">
+            Phone number is required
+          </div>
+
+          <div class="error-text"
+               *ngIf="submitted && form.phone && !isValidPhone(form.phone)">
+            Enter a valid 10-digit phone number starting with 6–9
+          </div>
+        </div>
+
+      </div>
+
+      <!-- PASSWORD -->
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <input
+          type="password"
+          name="password"
+          class="form-control"
+          [(ngModel)]="form.password"
+          placeholder="Enter password"
+          required
+          autocomplete="new-password"
+        />
+        <div class="error-text" *ngIf="submitted && !form.password">
+          Password is required
+        </div>
+      </div>
+
+      <!-- BUTTON -->
+      <button
+        type="submit"
+        class="btn btn-primary full-btn"
+        [disabled]="loading"
+      >
+        {{ loading ? 'Creating account...' : 'Sign Up' }}
+      </button>
+
+    </form>
+    <!-- ✅ FORM END -->
+
+    <div class="auth-footer">
+      Already have an account?
+      <a routerLink="/login">Login here</a>
+    </div>
+
+  </div>
+</div>
