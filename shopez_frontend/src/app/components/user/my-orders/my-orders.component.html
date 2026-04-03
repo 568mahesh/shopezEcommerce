@@ -1,0 +1,59 @@
+<div class="content-card">
+
+    <div class="section-header">
+      <h3>My Orders</h3>
+      <button class="btn btn-primary" (click)="goBack()">Back to Dashboard</button>
+    </div>
+  
+    <div *ngIf="orders.length === 0">
+      No orders found
+    </div>
+  
+    <div class="orders-list" *ngIf="orders.length > 0">
+  
+      <div class="order-row" *ngFor="let o of paginatedOrders">
+  
+        <!-- IMAGE -->
+        <div class="img-box">
+          <img [src]="o.image" class="small-img">
+        </div>
+  
+        <!-- DETAILS -->
+        <div class="order-details">
+          <h4>{{ o.productName }}</h4>
+          <p>Price: ₹{{ o.price }}</p>
+          <p>Qty: {{ o.quantity }}</p>
+        </div>
+  
+        <!-- STATUS -->
+        <div class="order-status">
+
+            <span class="status-badge"
+              [ngClass]="{
+                'pending': o.status === 'PENDING',
+                'approved': o.status === 'APPROVED',
+                'rejected': o.status === 'REJECTED'
+              }">
+              {{ o.status }}
+            </span>
+          
+            <button *ngIf="o.status === 'PENDING'"
+              class="btn cancel"
+              (click)="cancelOrder(o.id)">
+              Cancel
+            </button>
+          
+          </div>
+  
+      </div>
+  
+    </div>
+  
+    <!-- PAGINATION -->
+    <div class="pagination">
+      <button (click)="prevPage()">Prev</button>
+      <span>Page {{currentPage}}</span>
+      <button (click)="nextPage()">Next</button>
+    </div>
+  
+  </div>

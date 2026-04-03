@@ -1,0 +1,30 @@
+import { inject } from '@angular/core';
+import { CanActivateFn, Router } from '@angular/router';
+
+function isTokenExpired(token: string): boolean {
+  try {
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    if (!payload.exp) return false;
+    return Date.now() >= payload.exp * 1000;
+  } catch {
+    return true;
+  }
+}
+
+export const guestGuard: CanActivateFn = () => {
+  const router = inject(Router);
+  const token = localStorage.getItem('token');
+  const user = JSON.parse(localStorage.getItem('user') || '{}');
+
+  if (!token || isTokenExpired(token)) {
+    return true;
+  }
+
+  if (user?.role === 'ADMIN') {
+    router.navigate(['/admin']);
+    return false;
+  }
+
+  router.navigate(['/user']);
+  return false;
+};

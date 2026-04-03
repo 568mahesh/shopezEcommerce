@@ -1,0 +1,135 @@
+<div class="dashboard-shell user-shell">
+  <div class="dashboard-topbar user-topbar">
+    <div>
+      <h2>User Dashboard</h2>
+      <p>Welcome {{ user?.fullname || user?.username }} — explore and shop by category</p>
+    </div>
+    <div class="nav-links compact-links">
+      <a routerLink="/cart" class="top-link-btn">🛒</a>
+      <button class="btn btn-outline-light" (click)="goToOrders()">My Orders</button>
+      <button class="btn btn-outline-light" (click)="logout()">Logout</button>
+    </div>
+  </div>
+
+  <div class="content-card search-panel">
+    <div class="search-row">
+      <input
+        class="form-control search-input"
+        [(ngModel)]="searchText"
+        (input)="applyFilters()"
+        placeholder="Search by product name or category"
+      />
+      <a routerLink="/cart" class="btn btn-primary cart-shortcut">Go to Cart🛒</a>
+    </div>
+
+    <div class="category-pills">
+      <button
+        *ngFor="let category of categories"
+        class="pill-btn"
+        [class.active]="selectedCategory === category"
+        (click)="setCategory(category)"
+      >
+        {{ category }}
+      </button>
+    </div>
+  </div>
+
+  <div class="product-grid user-grid" *ngIf="filteredList.length > 0">
+    <div class="product-card admin-product-card" *ngFor="let p of filteredList">
+      <img [src]="p.image" class="product-image" [alt]="p.name">
+      <div class="product-body">
+        <span class="badge">{{ p.category }}</span>
+        <h3 class="product-title">{{ p.name }}</h3>
+        <p class="product-desc">{{ p.description }}</p>
+
+        <div class="product-meta-row">
+          <strong class="product-price">₹{{ p.price }}</strong>
+          <span class="stock-chip" [class.out-of-stock]="p.quantity <= 0">
+            {{ p.quantity > 0 ? ('Stock: ' + p.quantity) : 'Out of stock' }}
+          </span>
+        </div>
+
+        <div class="qty-stepper-row">
+          <button class="qty-btn" (click)="decreaseQty(p)" [disabled]="p.quantity <= 0">-</button>
+          <input
+            type="number"
+            class="qty-input"
+            min="1"
+            [max]="p.quantity"
+            [(ngModel)]="p.cartQuantity"
+            (input)="onQtyInput(p)"
+            [disabled]="p.quantity <= 0"
+          />
+          <button class="qty-btn" (click)="increaseQty(p)" [disabled]="p.quantity <= 0 || p.cartQuantity >= p.quantity">+</button>
+        </div>
+
+        <div class="card-actions-row">
+          <button class="btn btn-primary full-btn" (click)="addToCart(p)" [disabled]="p.quantity <= 0">
+            Add to Cart
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="showOrders" class="orders-section">
+
+    <h3>My Orders</h3>
+  
+    <div *ngIf="orders.length === 0">
+      No orders found
+    </div>
+  
+    <div class="table-wrapper" *ngIf="orders.length > 0">
+  
+      <table class="modern-table">
+  
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Image</th>
+            <th>Product</th>
+            <th>Price</th>
+            <th>Qty</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+  
+        <tbody>
+          <tr *ngFor="let o of orders; let i = index">
+  
+            <td>{{ i + 1 }}</td>
+  
+            <td>
+              <img [src]="o.image" class="order-img">
+            </td>
+  
+            <td>{{ o.productName }}</td>
+            <td>₹{{ o.price }}</td>
+            <td>{{ o.quantity }}</td>
+  
+            <td>
+              <span class="status-badge"
+                [ngClass]="{
+                  'pending': o.status === 'PENDING',
+                  'approved': o.status === 'APPROVED',
+                  'rejected': o.status === 'REJECTED'
+                }">
+                {{ o.status }}
+              </span>
+            </td>
+  
+          </tr>
+        </tbody>
+  
+      </table>
+  
+    </div>
+  
+  </div>
+
+  <div class="empty-state large" *ngIf="filteredList.length === 0">
+    No products found for the selected category or search.
+  </div>
+
+</div>

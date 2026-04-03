@@ -1,0 +1,148 @@
+.section-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  
+    background: linear-gradient(90deg, #1e293b, #0f172a);
+    color: white;
+  
+    padding: 15px 20px;
+    border-radius: 10px;
+  
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  
+    /*margin-bottom: 15px;*/
+  }
+  
+  /* Button inside header */
+  .section-header .btn {
+    background: white;
+    color: #1e293b;
+    border-radius: 20px;
+    padding: 6px 12px;
+  }
+
+.orders-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .order-row {
+    display: grid;
+    grid-template-columns: 80px 1fr 200px;  /* ✅ FIX ALIGNMENT */
+    align-items: center;
+  
+    background: #f8f9fc;
+    padding: 15px;
+    border-radius: 10px;
+  
+    gap: 20px;
+  }
+
+  .order-details {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  
+  .order-details h4 {
+    margin: 0;
+  }
+  
+  .order-details p {
+    margin: 0;
+    font-size: 14px;
+  }
+
+  .order-status {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+  }
+  
+  /* IMAGE */
+  .small-img {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+    transition: transform 0.3s;
+  }
+  
+  .small-img:hover {
+    transform: scale(2); /* 🔥 HOVER ZOOM */
+    
+   }
+  
+  /* STATUS COLORS */
+.status-badge {
+    padding: 6px 14px;
+    border-radius: 20px;
+    color: white;
+    font-weight: bold;
+  }
+  
+  .pending {
+    background: orange;
+  }
+  
+  .approved {
+    background: green;
+  }
+  
+  .rejected {
+    background: red;
+  }
+  
+  /* CANCEL BUTTON */
+  .btn.cancel {
+    background: red;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 20px;
+  }
+  /* ===== MOBILE FIX ===== */
+  @media (max-width: 768px) {
+  
+    .order-row {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .order-status {
+      align-items: flex-start;
+    }
+  
+    .section-header {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      
+        background: linear-gradient(90deg, #1e293b, #0f172a);
+        color: white;
+      
+        padding: 15px 20px;
+        border-radius: 10px;
+      
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      
+        /*margin-bottom: 15px;*/
+      }
+  
+  }
+  
+  /* REMOVE HORIZONTAL SCROLL */
+  body {
+    overflow-x: hidden;
+  }
+  /* PAGINATION */
+  .pagination {
+    margin-top: 15px;
+    text-align: center;
+  }
