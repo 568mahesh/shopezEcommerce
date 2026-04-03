@@ -1,0 +1,7 @@
+Tables created automatically by Hibernate:
+- users
+- product
+- cart
+- order_history
+
+Product.image stores Base64 image text so images can be displayed in admin and user dashboards.
