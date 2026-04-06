@@ -2,6 +2,7 @@ package com.shopez.Ecommerce.controller;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.shopez.Ecommerce.entity.User;
 import com.shopez.Ecommerce.repo.UserRepo;
 import com.shopez.Ecommerce.security.JwtUtil;
@@ -97,4 +99,69 @@ public class AuthController {
 
         return res;
     }
+    
+    
+    // 1. FORGOT PASSWORD - Send OTP
+    @PostMapping("/forgot-password")
+    public Map<String, Object> forgotPassword(@RequestBody Map<String, String> request) {
+        Map<String, Object> res = new HashMap<>();
+        
+        // Extract email from the JSON body
+        String email = request.get("email");
+        
+        System.out.println("Validating email: " + email); // Debugging line
+
+        if (email == null || email.isBlank()) {
+            res.put("message", "Email is required");
+            res.put("success", false);
+            return res;
+        }
+
+        User user = repo.findByEmail(email.trim());
+
+        if (user == null) {
+            res.put("message", "Email does not exist in database");
+            res.put("success", false);
+            return res;
+        }
+
+        // Generate 4-digit OTP
+        String otp = String.valueOf(new Random().nextInt(8999) + 1000);
+        
+        user.setOtp(otp); 
+        repo.save(user);
+
+        emailService.sendEmail(
+            user.getEmail(),
+            "Password Reset OTP",
+            "Your OTP for resetting password is: " + otp
+        );
+
+        res.put("message", "OTP sent successfully");
+        res.put("success", true);
+        return res;
+    }
+    // 2. RESET PASSWORD - Verify OTP and Update
+    @PostMapping("/reset-password")
+    public Map<String, Object> resetPassword(@RequestBody Map<String, String> data) {
+        Map<String, Object> res = new HashMap<>();
+        String email = data.get("email");
+        String otp = data.get("otp");
+        String newPassword = data.get("newPassword");
+
+        User user = repo.findByEmail(email);
+
+        if (user != null && user.getOtp() != null && user.getOtp().equals(otp)) {
+            user.setPassword(encoder.encode(newPassword));
+            user.setOtp(null); // Clear OTP after use
+            repo.save(user);
+            res.put("message", "Password reset successful");
+            res.put("success", true);
+        } else {
+            res.put("message", "Invalid OTP");
+            res.put("success", false);
+        }
+        return res;
+    }
+    
 }
