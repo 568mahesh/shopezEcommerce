@@ -1,0 +1,52 @@
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+}
+
+.logo span {
+  color: #0d6efd;
+}
+
+/* 🔥 Logo Image Fix */
+.logo-img {
+  width: 50px;        /* decrease size */
+  height: 50px;       /* same as width → perfect circle */
+  border-radius: 50%; /* makes it round */
+  object-fit: cover;  /* fills circle properly */
+  margin-right: 8px;
+}
+
+/* Center nav */
+nav {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+/* Dropdown card (only for small screens) */
+.auth-dropdown {
+  position: absolute;
+  top: 70px;
+  right: 20px;
+  z-index: 1000;
+}
+
+.auth-card {
+  background: white;
+  padding: 12px;
+  border-radius: 12px;
+  width: 160px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Toggler icon */
+.navbar-toggler-icon {
+  filter: invert(0.5);
+}
+a{
+  text-decoration: none;
+}

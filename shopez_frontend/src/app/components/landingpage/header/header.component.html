@@ -1,0 +1,43 @@
+<header class="navbar navbar-expand-lg navbar-light px-3 sticky-top custom-header">
+
+  <!-- Logo -->
+  <div class="logo d-flex align-items-center">
+  <img src="assets/images/logo.png" alt="logo" class="logo-img me-2">
+  Shop<span>eZ</span>
+</div>
+
+  <!-- Nav Links (CENTER) -->
+  <nav class="mx-auto">
+    <ul class="d-flex list-unstyled mb-0 gap-4 justify-content-center">
+      <li><a routerLink="/" fragment="">Home</a></li>
+      <li><a routerLink="/" fragment="about">About</a></li>
+      <li><a routerLink="/" fragment="features">Features</a></li>
+      <li><a routerLink="/" fragment="contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- Toggler (ONLY for small screens) -->
+<button class="navbar-toggler ms-auto border-0 d-lg-none"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#authMenu">
+  <span class="navbar-toggler-icon"></span>
+</button>
+
+<!-- ✅ Buttons visible on LARGE screens -->
+<div class="d-none d-lg-flex ms-auto gap-2">
+  <button class="btn btn-primary btn-lg" (click)="goLogin()">Login</button>
+        <button class="btn btn-success btn-lg" (click)="goRegister()">Sign Up</button>
+</div>
+
+
+
+<!-- ✅ Dropdown card ONLY for SMALL screens -->
+<div class="collapse auth-dropdown d-lg-none" id="authMenu">
+  <div class="auth-card shadow">
+    <button class="btn btn-primary btn-lg" (click)="goLogin()">Login</button>
+        <button class="btn btn-success btn-lg" (click)="goRegister()">Sign Up</button>
+  </div>
+</div>
+
+</header>

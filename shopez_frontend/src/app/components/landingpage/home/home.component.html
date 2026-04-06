@@ -1,0 +1,81 @@
+<app-header id="home"></app-header>
+
+<main class="hero-section">
+    <div class="overlay">
+        <div class="hero-content">
+            <h1>Modern Elegance, <br> Delivered to Your Door.</h1>
+            <p>Discover the latest trends in fashion and technology with LUXESTORE.</p>
+            <button class="cta-button" (click)="scrollToCollection()">
+                Shop Collection
+            </button>
+        </div>
+    </div>
+</main>
+
+<section id="about" class="about-section" style="padding: 80px 10%; background: white;">
+    <h2>About LUXESTORE</h2>
+    <p>We are a premium e-commerce platform dedicated to quality and style...</p>
+    <p>At <strong>LUXESTORE</strong>, we believe that quality shouldn't be a luxury. What started as a small boutique in
+        2020 has grown into a global destination for those who appreciate craftsmanship and timeless design.</p>
+    <p>Our team travels the globe to source materials that are ethically produced and built to last. Whether you are
+        looking for the perfect evening gown or the latest in smart-home technology, we bring it all to your fingertips
+        with a focus on seamless user experience.</p>
+</section>
+
+<!-- IMAGE CARDS SECTION -->
+<section class="collection-section" id="collection">
+  <h2 class="text-center mb-4">Our Collection</h2>
+
+  <div class="row justify-content-center">
+    <div class="col-md-3 col-sm-6 mb-4" *ngFor="let img of images">
+  <div class="card shadow-sm image-card">
+    <img [src]="img" (click)="openImage(img)" data-bs-toggle="modal" data-bs-target="#imageModal">
+  </div>
+</div>
+  </div>
+</section>
+       
+
+        
+   
+
+<section class="features" id="features">
+    <div class="feature-card">
+        <i>🚚</i>
+        <h3>Free Shipping</h3>
+        <p>On orders over $50</p>
+    </div>
+    <div class="feature-card">
+        <i>🛡️</i>
+        <h3>Secure Payment</h3>
+        <p>100% protected</p>
+    </div>
+    <div class="feature-card">
+        <i>🔄</i>
+        <h3>Easy Returns</h3>
+        <p>30-day guarantee</p>
+    </div>
+</section>
+
+<section id="contact" class="contact-section" style="padding: 80px 10%; background: #f4f4f4;">
+    <h2>Contact Us</h2>
+    <p>Email: support&#64;luxestore.com</p>
+    <p>Phone: +1 234 567 890</p>
+</section>
+
+<app-footer></app-footer>
+<!-- Image Popup Modal -->
+<div class="modal fade" id="imageModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered custom-modal">
+    <div class="modal-content">
+
+      <!-- 🔥 Close Button -->
+      <button type="button" class="btn-close custom-close" data-bs-dismiss="modal"></button>
+
+      <div class="modal-body text-center">
+        <img [src]="selectedImage" class="popup-img">
+      </div>
+
+    </div>
+  </div>
+</div>
