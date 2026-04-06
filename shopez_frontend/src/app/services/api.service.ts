@@ -14,6 +14,14 @@ export class ApiService {
   login(data: any) {
     return this.http.post(this.baseUrl + '/auth/login', data);
   }
+forgotPasswordByEmail(email: string) {
+  // This sends { "email": "user@example.com" } in the body
+  return this.http.post(`${this.baseUrl}/auth/forgot-password`, { email: email });
+}
+
+verifyAndResetPassword(data: any) {
+  return this.http.post(`${this.baseUrl}/auth/reset-password`, data);
+}
   
 
   getProducts() {

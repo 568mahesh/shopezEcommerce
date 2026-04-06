@@ -8,12 +8,13 @@ import { CartComponent } from './components/cart/cart.component';
 import { adminGuard } from './guards/admin.guard';
 import { userGuard } from './guards/user.guard';
 import { guestGuard } from './guards/guest.guard';
+import { ForgotpasswordComponent } from './components/forgotpassword/forgotpassword.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent, canActivate: [guestGuard] },
   { path: 'register', component: RegisterComponent, canActivate: [guestGuard] },
-
+  { path: 'forgot-password', component: ForgotpasswordComponent},
   { path: 'admin', component: AdminComponent, canActivate: [adminGuard] },
   { path: 'user', component: UserComponent, canActivate: [userGuard] },
   { path: 'cart', component: CartComponent, canActivate: [userGuard] },
