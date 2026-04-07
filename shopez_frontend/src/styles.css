@@ -679,3 +679,33 @@ textarea.form-control {
     align-items: flex-start;
   }
 }
+
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background:
+    linear-gradient(180deg, #f8fbff 0%, #eef2ff 100%);
+}
+
+.dashboard-shell,
+.page-center,
+.hero-section,
+.footer {
+  background-size: cover;
+}
+
+.product-card .product-image,
+.cart-img,
+.order-img {
+  image-rendering: auto;
+}
+
+@media (max-width: 768px) {
+  .form-row-two,
+  .form-grid-two {
+    grid-template-columns: 1fr;
+  }
+}

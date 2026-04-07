@@ -1,52 +1,97 @@
 
+.custom-header {
+  background:
+    linear-gradient(135deg, rgba(9,15,33,0.92), rgba(30,41,59,0.88));
+  border-bottom: 1px solid rgba(255,255,255,0.10);
+  box-shadow: 0 14px 30px rgba(0,0,0,0.18);
+  backdrop-filter: blur(12px);
+}
+
 .logo {
   font-size: 1.5rem;
-  font-weight: bold;
+  font-weight: 800;
   display: flex;
   align-items: center;
+  color: white;
+  cursor: pointer;
 }
 
 .logo span {
-  color: #0d6efd;
+  color: #60a5fa;
 }
 
-/* 🔥 Logo Image Fix */
 .logo-img {
-  width: 50px;        /* decrease size */
-  height: 50px;       /* same as width → perfect circle */
-  border-radius: 50%; /* makes it round */
-  object-fit: cover;  /* fills circle properly */
-  margin-right: 8px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 8px 18px rgba(96,165,250,0.35);
 }
 
-/* Center nav */
-nav {
+.desktop-nav {
   flex: 1;
   display: flex;
   justify-content: center;
 }
 
-/* Dropdown card (only for small screens) */
+.nav-links-list a,
+.auth-card a {
+  color: rgba(255,255,255,0.92);
+  font-weight: 700;
+  position: relative;
+  cursor: pointer;
+}
+
+.nav-links-list a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -7px;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, #60a5fa, #c084fc);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.2s ease;
+}
+
+.nav-links-list a:hover::after {
+  transform: scaleX(1);
+}
+
 .auth-dropdown {
   position: absolute;
-  top: 70px;
+  top: 76px;
   right: 20px;
   z-index: 1000;
 }
 
 .auth-card {
-  background: white;
-  padding: 12px;
-  border-radius: 12px;
-  width: 160px;
+  background: rgba(15,23,42,0.96);
+  border: 1px solid rgba(255,255,255,0.10);
+  padding: 14px;
+  border-radius: 18px;
+  width: 190px;
   display: flex;
   flex-direction: column;
+  gap: 12px;
 }
 
-/* Toggler icon */
 .navbar-toggler-icon {
-  filter: invert(0.5);
+  filter: invert(1);
 }
-a{
+
+a {
   text-decoration: none;
+}
+
+@media (max-width: 991px) {
+  .desktop-nav {
+    display: none;
+  }
+
+  .custom-header {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
 }

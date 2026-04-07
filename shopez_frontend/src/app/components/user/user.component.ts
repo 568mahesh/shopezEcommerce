@@ -5,7 +5,6 @@ import { Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { ToastService } from '../../services/toast.service';
 
-
 @Component({
   selector: 'app-user',
   standalone: true,
@@ -21,7 +20,8 @@ export class UserComponent {
   user: any;
   searchText = '';
   selectedCategory = 'All';
-  showOrders: boolean = false;
+  showOrders = false;
+  expandedDescriptions: Record<number, boolean> = {};
 
   categories: string[] = ['All', 'Mobiles', 'Electronics', 'Home Needs', 'Toys', 'Fashion', 'Laptops'];
 
@@ -29,13 +29,11 @@ export class UserComponent {
     private api: ApiService,
     private router: Router,
     private toast: ToastService
-  
   ) {}
 
   ngOnInit() {
-    
     this.user = JSON.parse(localStorage.getItem('user') || '{}');
-    this.userId = this.user?.id; // ✅ FIX
+    this.userId = this.user?.id;
     this.loadProducts();
   }
 
@@ -55,29 +53,17 @@ export class UserComponent {
     });
   }
 
-  selectedProduct: any = null;
-
-openProductPopup(product: any) {
-  this.selectedProduct = product;
-}
-
-closePopup() {
-  this.selectedProduct = null;
-}
-
   toggleOrders() {
-
     this.showOrders = !this.showOrders;
-  
+
     if (this.showOrders) {
       this.loadMyOrders();
     }
   }
 
-  
   loadMyOrders() {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
-  
+
     this.api.getUserOrders(user.id).subscribe({
       next: (res: any) => {
         this.orders = res || [];
@@ -105,6 +91,14 @@ closePopup() {
 
       return matchCategory && matchSearch;
     });
+  }
+
+  toggleDescription(productId: number) {
+    this.expandedDescriptions[productId] = !this.expandedDescriptions[productId];
+  }
+
+  isDescriptionExpanded(productId: number): boolean {
+    return !!this.expandedDescriptions[productId];
   }
 
   increaseQty(product: any) {
@@ -169,11 +163,12 @@ closePopup() {
     localStorage.removeItem('user');
     localStorage.removeItem('userId');
     localStorage.removeItem('role');
-  
+
     sessionStorage.clear();
     localStorage.clear();
     this.router.navigate(['/login']);
   }
+
   goToOrders() {
     this.router.navigate(['/my-orders']);
   }

@@ -4,10 +4,11 @@ import { Router } from '@angular/router';
 import { ToastService } from '../../services/toast.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-forgotpassword',
-  imports: [FormsModule,CommonModule],
+  imports: [FormsModule,CommonModule,RouterLink],
   templateUrl: './forgotpassword.component.html',
   styleUrl: './forgotpassword.component.css'
 })

@@ -12,19 +12,18 @@ import { CommonModule } from '@angular/common';
 export class HomeComponent {
   selectedImage: string = '';
 
-  openImage(img: string) {
-    this.selectedImage = img;
-  }
-  scrollToCollection() {
-    const element = document.getElementById('collection');
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  }
   images = [
     '/assets/images/bg.png',
     '/assets/images/shoes.png',
     '/assets/images/lunchbag.png',
     '/assets/images/toys.png'
   ];
+
+  openImage(img: string) {
+    this.selectedImage = img;
+  }
+
+  scrollToSection(sectionId: string) {
+    document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
 }

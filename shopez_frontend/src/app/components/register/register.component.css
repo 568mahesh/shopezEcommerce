@@ -1,0 +1,12 @@
+
+.page-center.auth-page-bg {
+  background:
+    linear-gradient(rgba(8,15,32,0.68), rgba(8,15,32,0.62)),
+    url('/assets/images/womens.png') center/cover no-repeat fixed;
+}
+
+.auth-card {
+  background: rgba(255,255,255,0.93);
+  border: 1px solid rgba(255,255,255,0.45);
+  backdrop-filter: blur(16px);
+}

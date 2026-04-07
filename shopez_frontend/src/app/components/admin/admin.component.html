@@ -1,5 +1,5 @@
 
-<div class="dashboard-shell">
+<div class="dashboard-shell admin-shell">
   <div class="dashboard-topbar">
     <div>
       <h2>Admin Dashboard</h2>
@@ -29,7 +29,7 @@
 
         <div class="admin-product-grid" *ngIf="products.length > 0">
           <div class="product-card admin-product-card" *ngFor="let p of products">
-            <img [src]="p.image" class="product-image" [alt]="p.name">
+            <div class="image-stage admin-image-stage"><img [src]="p.image" class="product-image" [alt]="p.name"></div>
             <div class="product-body">
               <span class="badge">{{ p.category }}</span>
               <h3 class="product-title">{{ p.name }}</h3>

@@ -66,7 +66,15 @@ itemsPerPage: number = 8;
       quantity: ''
     };
   }
+  selectedProduct: any = null;
 
+  openProductPopup(product: any) {
+    this.selectedProduct = product;
+  }
+  
+  closePopup() {
+    this.selectedProduct = null;
+  }
   switchTab(tab: 'products' | 'users' | 'add-product'| 'orders') {
     this.activeTab = tab;
     this.submitted = false;
