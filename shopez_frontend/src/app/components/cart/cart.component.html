@@ -1,4 +1,6 @@
 <div class="dashboard-shell user-shell">
+
+  <!-- 🔷 HEADER -->
   <div class="dashboard-topbar user-topbar">
     <div>
       <h2>My Cart</h2>
@@ -7,33 +9,66 @@
     <button class="btn btn-outline-light" (click)="goBack()">Back to Dashboard</button>
   </div>
 
-  <div class="content-card" *ngIf="cart.length === 0">
-    <div class="empty-state large">Your cart is empty.</div>
+  <!-- ❌ EMPTY -->
+  <div *ngIf="cart.length === 0" class="empty-state large">
+    Your cart is empty.
   </div>
 
-  <div class="cart-list" *ngIf="cart.length > 0">
-    <div *ngFor="let c of cart" class="cart-item card-like">
-      <div class="cart-item-left cart-layout-two">
-        <img [src]="c.product.image" class="cart-thumb" [alt]="c.product.name">
+  <!-- 🔥 TABLE STYLE CART -->
+  <div *ngIf="cart.length > 0" class="cart-table-container">
+
+    <!-- HEADER -->
+    <div class="cart-table-header">
+      <div>Product</div>
+      <div>Price</div>
+      <div>Quantity</div>
+      <div>Total</div>
+      <div>Action</div>
+    </div>
+
+    <!-- ITEMS -->
+    <div *ngFor="let c of cart" class="cart-table-row">
+
+      <div class="product-col">
+        <img [src]="c.product.image" class="cart-img">
         <div>
-          <h3>{{ c.product.name }}</h3>
+          <h4>{{ c.product.name }}</h4>
           <p>{{ c.product.category }}</p>
-          <p>Quantity: {{ c.quantity }}</p>
-          <p>Price: ₹{{ c.product.price }}</p>
         </div>
       </div>
 
-      <div class="cart-side-actions">
-        <strong>₹{{ c.product.price * c.quantity }}</strong>
-        <button class="btn btn-danger small-btn" (click)="remove(c.id)">Remove</button>
+      <div>₹{{ c.product.price }}</div>
+
+      <div>{{ c.quantity }}</div>
+
+      <div>₹{{ c.product.price * c.quantity }}</div>
+
+      <div>
+        <button class="btn btn-danger small-btn" (click)="remove(c.id)">
+          Remove
+        </button>
       </div>
+
     </div>
 
-    <div class="cart-summary card-like">
-      <h3>Total: ₹{{ totalAmount }}</h3>
-      <button class="btn btn-success" (click)="placeOrder()" [disabled]="placingOrder">
-        {{ placingOrder ? 'Placing Order...' : 'Place Order' }}
-      </button>
+    <!-- 🔥 PAGINATION (ONLY ITEMS) -->
+    <div class="pagination">
+      <button (click)="prevPage()" [disabled]="currentPage === 0">Prev</button>
+
+      <span>Page {{ currentPage + 1 }} of {{ totalPages }}</span>
+
+      <button (click)="nextPage()" [disabled]="currentPage + 1 >= totalPages">Next</button>
     </div>
+
   </div>
+
+  <!-- 🔥 FIXED SUMMARY -->
+  <div class="cart-summary-fixed" *ngIf="cart.length > 0">
+    <h3>Total: ₹{{ totalAmount }}</h3>
+
+    <button class="btn btn-success" (click)="placeOrder()" [disabled]="placingOrder">
+      {{ placingOrder ? 'Placing...' : 'Place Order' }}
+    </button>
+  </div>
+
 </div>

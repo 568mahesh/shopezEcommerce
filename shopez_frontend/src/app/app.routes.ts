@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { HomeComponent } from './components/home/home.component';
+import { HomeComponent } from './components/landingpage/home/home.component'; 
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { AdminComponent } from './components/admin/admin.component';
@@ -14,7 +14,7 @@ export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent, canActivate: [guestGuard] },
   { path: 'register', component: RegisterComponent, canActivate: [guestGuard] },
-  { path: 'forgot-password', component: ForgotpasswordComponent},
+
   { path: 'admin', component: AdminComponent, canActivate: [adminGuard] },
   { path: 'user', component: UserComponent, canActivate: [userGuard] },
   { path: 'cart', component: CartComponent, canActivate: [userGuard] },
@@ -23,6 +23,8 @@ export const routes: Routes = [
     loadComponent: () => import('./components/user/my-orders/my-orders.component')
       .then(m => m.MyOrdersComponent)
   },
+
+  { path: 'forgot-password', component:ForgotpasswordComponent },
 
   { path: '**', redirectTo: '' }
 ];

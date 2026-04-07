@@ -55,6 +55,16 @@ export class UserComponent {
     });
   }
 
+  selectedProduct: any = null;
+
+openProductPopup(product: any) {
+  this.selectedProduct = product;
+}
+
+closePopup() {
+  this.selectedProduct = null;
+}
+
   toggleOrders() {
 
     this.showOrders = !this.showOrders;
