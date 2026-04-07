@@ -29,6 +29,12 @@ statusFilter: string = 'ALL';
   editingUserId: number | null = null;
   userForm: any = {};
 
+  userCurrentPage: number = 0;   // backend page starts from 0
+  userTotalPages: number = 0;
+  userPageSize: number = 5;
+  
+  selectedRole: string = 'all';
+  
   submitted = false;
   currentPage: number = 1;
 itemsPerPage: number = 8;
@@ -47,7 +53,7 @@ itemsPerPage: number = 8;
       if (this.activeTab === 'orders') {
         this.loadOrders();
       }
-    }, 3000);
+    }, 15000);
   }
 
   getEmptyProduct() {
@@ -65,7 +71,7 @@ itemsPerPage: number = 8;
     this.activeTab = tab;
     this.submitted = false;
     if (tab === 'products') this.loadProducts();
-    if (tab === 'users') this.loadUsers();
+    if (tab === 'users') this.loadUsers(0);
     if(tab === 'orders') this.loadOrders();
     if (tab === 'add-product') this.cancelEditProduct();
   }
@@ -81,18 +87,22 @@ itemsPerPage: number = 8;
       }
     });
   }
+  loadUsers(page: number = 0) {
 
-  loadUsers() {
-    this.api.getUsers().subscribe({
+    this.api.getUsers(page, this.userPageSize, this.selectedRole).subscribe({
       next: (res: any) => {
-        this.users = res || [];
+        this.users = res.content;          // ✅ important
+        this.userCurrentPage = res.number; // current page
+        this.userTotalPages = res.totalPages;
       },
       error: (err) => {
         console.error(err);
         this.toast.error('Failed to load users');
       }
     });
+  
   }
+ 
   loadOrders() {
     this.api.getAllOrders().subscribe((data: any) => {
       this.orders = data;
@@ -135,6 +145,18 @@ nextPage() {
 prevPage() {
   if (this.currentPage > 1) {
     this.currentPage--;
+  }
+}
+
+nextUserPage() {
+  if (this.userCurrentPage + 1 < this.userTotalPages) {
+    this.loadUsers(this.userCurrentPage + 1);
+  }
+}
+
+prevUserPage() {
+  if (this.userCurrentPage > 0) {
+    this.loadUsers(this.userCurrentPage - 1);
   }
 }
 
@@ -240,7 +262,7 @@ prevPage() {
       next: () => {
         this.toast.success('User updated successfully');
         this.cancelEditUser();
-        this.loadUsers();
+        this.loadUsers(this.userCurrentPage);
       },
       error: (err) => {
         console.error(err);
@@ -253,7 +275,7 @@ prevPage() {
     this.api.deleteUser(id).subscribe({
       next: () => {
         this.toast.success('User deleted successfully');
-        this.loadUsers();
+        this.loadUsers(this.userCurrentPage);
       },
       error: (err) => {
         console.error(err);

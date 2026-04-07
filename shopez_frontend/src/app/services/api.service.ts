@@ -14,15 +14,15 @@ export class ApiService {
   login(data: any) {
     return this.http.post(this.baseUrl + '/auth/login', data);
   }
-forgotPasswordByEmail(email: string) {
-  // This sends { "email": "user@example.com" } in the body
-  return this.http.post(`${this.baseUrl}/auth/forgot-password`, { email: email });
-}
-
-verifyAndResetPassword(data: any) {
-  return this.http.post(`${this.baseUrl}/auth/reset-password`, data);
-}
   
+  forgotPasswordByEmail(email: string) {
+    // This sends { "email": "user@example.com" } in the body
+    return this.http.post(`${this.baseUrl}/auth/forgot-password`, { email: email });
+  }
+  
+  verifyAndResetPassword(data: any) {
+    return this.http.post(`${this.baseUrl}/auth/reset-password`, data);
+  }
 
   getProducts() {
     return this.http.get(this.baseUrl + '/user/products');
@@ -44,9 +44,23 @@ verifyAndResetPassword(data: any) {
     return this.http.delete(this.baseUrl + '/admin/delete/' + id);
   }
 
-  getUsers() {
+  /*getUsers() {
     return this.http.get(this.baseUrl + '/admin/users');
-  }
+  }*/
+
+    getUsers(page: number, size: number, role: string) {
+
+      const token = localStorage.getItem('token'); // if using JWT
+    
+      return this.http.get(
+        `http://localhost:8082/admin/users?page=${page}&size=${size}&role=${role}`,
+        {
+         /* headers: {
+            Authorization: `Bearer ${token}`
+          }*/
+        }
+      );
+    }
 
   updateUser(id: number, data: any) {
     return this.http.put(this.baseUrl + '/admin/users/' + id, data);
@@ -60,8 +74,23 @@ verifyAndResetPassword(data: any) {
     return this.http.post(this.baseUrl + '/user/cart', data);
   }
 
-  getCart(userId: number) {
-    return this.http.get(this.baseUrl + '/user/cart/' + userId);
+  getCartTotal(userId: number) {
+    return this.http.get(
+      `http://localhost:8082/user/cart/total/${userId}`
+    );
+  }
+
+  getCart(userId: number, page: number, size: number) {
+    const token = localStorage.getItem('token');
+  
+    return this.http.get(
+      `http://localhost:8082/user/cart/${userId}?page=${page}&size=${size}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
+    );
   }
 
   removeCart(id: number) {

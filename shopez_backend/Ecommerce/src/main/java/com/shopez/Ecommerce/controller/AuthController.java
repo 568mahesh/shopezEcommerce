@@ -100,9 +100,7 @@ public class AuthController {
 
         return res;
     }
-    
-    
-    // 1. FORGOT PASSWORD - Send OTP
+ // 1. FORGOT PASSWORD - Send OTP
     @PostMapping("/forgot-password")
     public ResponseEntity<?> forgotPassword(
             @RequestBody Map<String, String> request) {
@@ -151,7 +149,7 @@ public class AuthController {
         );
     }
     
-    //2.Reset Password
+  //2.Reset Password
     @PostMapping("/reset-password")
     public ResponseEntity<?> resetPassword(
             @RequestBody Map<String, String> data) {
@@ -198,5 +196,9 @@ public class AuthController {
                         "message", "Password reset successful"
                 )
         );
-    }    
+    }
+
+    
+    
+
 }
