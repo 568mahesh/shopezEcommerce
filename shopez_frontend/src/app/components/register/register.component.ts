@@ -9,7 +9,8 @@ import { ToastService } from '../../services/toast.service';
   selector: 'app-register',
   standalone: true,
   imports: [FormsModule, CommonModule, RouterModule],
-  templateUrl: './register.component.html'
+  templateUrl: './register.component.html',
+  styleUrl: './register.component.css'
 })
 export class RegisterComponent {
 
@@ -31,26 +32,19 @@ export class RegisterComponent {
     private toast: ToastService
   ) {}
 
-  // ✅ EMAIL VALIDATION
+  //  EMAIL VALIDATION
   isValidEmail(email: string): boolean {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   }
 
-  // ✅ PHONE VALIDATION (6-9 start + 10 digits)
+  //  PHONE VALIDATION (6-9 start + 10 digits)
   isValidPhone(phone: string): boolean {
     return /^[6-9][0-9]{9}$/.test(phone);
   }
 
-  // ✅ ALLOW ONLY NUMBERS WHILE TYPING
-  allowOnlyNumbers(event: KeyboardEvent) {
-    const charCode = event.key.charCodeAt(0);
+  
 
-    if (charCode < 48 || charCode > 57) {
-      event.preventDefault();
-    }
-  }
-
-  // ✅ PREVENT PASTE INVALID TEXT
+  //  PREVENT PASTE INVALID TEXT
   onPaste(event: ClipboardEvent) {
     const pasted = event.clipboardData?.getData('text') || '';
 
@@ -59,12 +53,33 @@ export class RegisterComponent {
     }
   }
 
-  // ✅ MAIN REGISTER METHOD
+showPassword = false;
+
+togglePassword() {
+  this.showPassword = !this.showPassword;
+}
+
+//  ALLOW ONLY NUMBERS WHILE TYPING
+  
+allowOnlyNumbers(event: any) {
+  const charCode = event.which ? event.which : event.keyCode;
+
+  if (charCode < 48 || charCode > 57) {
+    event.preventDefault();
+  }
+}
+
+// 6-digit validation
+isValidPassword(): boolean {
+  return /^[0-9]{6}$/.test(this.form.password);
+}
+
+  //  MAIN REGISTER METHOD
   register() {
 
     this.submitted = true;
 
-    // 🔴 CHECK EMPTY FIELDS
+    //  CHECK EMPTY FIELDS
     if (
       !this.form.fullname ||
       !this.form.username ||
@@ -77,19 +92,29 @@ export class RegisterComponent {
       return;
     }
 
-    // 🔴 EMAIL VALIDATION
+    //  EMAIL VALIDATION
     if (!this.isValidEmail(this.form.email)) {
       this.toast.error('Please enter a valid email');
       return;
     }
 
-    // 🔴 PHONE VALIDATION (UPDATED MESSAGE)
+    //  PHONE VALIDATION (UPDATED MESSAGE)
     if (!this.isValidPhone(this.form.phone)) {
       this.toast.error('Enter valid phone number (start with 6-9 and 10 digits)');
       return;
     }
+    //Password valid
+    if (!this.form.password) {
+      this.submitted = true;
+      return;
+    }
+    
+    if (!this.isValidPassword()) {
+      this.toast.error('Password must be exactly 6 digits ❌');
+      return;
+    }
 
-    // 🔵 CALL API
+    //  CALL API
     this.loading = true;
 
     this.api.register(this.form).subscribe({
@@ -105,7 +130,7 @@ export class RegisterComponent {
 
         this.toast.success(res?.message || 'Registered successfully');
 
-        // 🔄 REDIRECT
+        //  REDIRECT
         this.router.navigate(['/login']);
       },
 

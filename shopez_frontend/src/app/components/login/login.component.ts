@@ -10,7 +10,8 @@ import { ToastService } from '../../services/toast.service';
   selector: 'app-login',
   standalone: true,
   imports: [FormsModule, CommonModule, RouterModule],
-  templateUrl: './login.component.html'
+  templateUrl: './login.component.html',
+  styleUrl: './login.component.css'
 })
 export class LoginComponent {
   form: any = {

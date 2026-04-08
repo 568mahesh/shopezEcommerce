@@ -136,7 +136,8 @@ userId: number = Number(localStorage.getItem('userId'));
         this.placingOrder = false;
         this.cart = [];
         this.totalAmount = 0;
-        alert(res?.message || 'Order placed successfully');
+        this.toast.success('Order placed successfully ✅');
+        //alert(res?.message || 'Order placed successfully');
         this.router.navigate(['/user']);
       },
       error: (err) => {

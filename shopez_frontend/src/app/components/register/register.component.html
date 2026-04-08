@@ -6,7 +6,7 @@
     </div>
 
     <h2>Create Account</h2>
-    <p class="auth-subtitle">Register as admin or user to continue with ShopEZ</p>
+    <p class="auth-subtitle">Register as user to continue with ShopEZ</p>
 
     <!-- ✅ FORM START -->
     <form (ngSubmit)="register()" #registerForm="ngForm" autocomplete="on">
@@ -113,22 +113,40 @@
 
       </div>
 
-      <!-- PASSWORD -->
-      <div class="form-group">
-        <label class="form-label">Password</label>
-        <input
-          type="password"
-          name="password"
-          class="form-control"
-          [(ngModel)]="form.password"
-          placeholder="Enter password"
-          required
-          autocomplete="new-password"
-        />
-        <div class="error-text" *ngIf="submitted && !form.password">
-          Password is required
-        </div>
-      </div>
+  <!-- PASSWORD -->
+<div class="form-group">
+  <label class="form-label">Password</label>
+
+  <div class="password-wrapper">
+    <input
+      [type]="showPassword ? 'text' : 'password'"
+      name="password"
+      class="form-control"
+      [(ngModel)]="form.password"
+      placeholder="Enter 6 digit password"
+      required
+      maxlength="6"
+      pattern="^[0-9]{6}$"
+      autocomplete="new-password"
+      (keypress)="allowOnlyNumbers($event)"
+    />
+
+    <!-- 👁️ Eye Icon -->
+    <span class="eye-icon" (click)="togglePassword()">
+      <i class="bi" [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'"></i>
+    </span>
+  </div>
+
+  <!-- Required Error -->
+  <div class="error-text" *ngIf="submitted && !form.password">
+    Password is required
+  </div>
+
+  <!-- Pattern Error -->
+  <div class="error-text" *ngIf="submitted && form.password && !isValidPassword()">
+    Password must be exactly 6 digits
+  </div>
+</div>
 
       <!-- BUTTON -->
       <button
